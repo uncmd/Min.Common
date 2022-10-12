@@ -1,4 +1,5 @@
 ﻿using System.Collections.Concurrent;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -10,7 +11,7 @@ public static class ObjectHelper
         new ConcurrentDictionary<string, PropertyInfo>();
 
     public static void TrySetProperty<TObject, TValue>(
-        TObject obj,
+        [NotNull] TObject obj,
         Expression<Func<TObject, TValue>> propertySelector,
         Func<TValue> valueFactory,
         params Type[] ignoreAttributeTypes)
@@ -19,12 +20,12 @@ public static class ObjectHelper
     }
 
     public static void TrySetProperty<TObject, TValue>(
-        TObject obj,
+        [NotNull] TObject obj,
         Expression<Func<TObject, TValue>> propertySelector,
         Func<TObject, TValue> valueFactory,
         params Type[] ignoreAttributeTypes)
     {
-        var cacheKey = $"{obj.GetType().FullName}-" +
+        var cacheKey = $"{obj?.GetType().FullName}-" +
                        $"{propertySelector}-" +
                        $"{(ignoreAttributeTypes != null ? "-" + string.Join("-", ignoreAttributeTypes.Select(x => x.FullName)) : "")}";
 

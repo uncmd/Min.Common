@@ -9,22 +9,22 @@ namespace System;
 
 public static class MinStringExtensions
 {
-    public static bool IsNullOrEmpty(this string str)
+    public static bool IsNullOrEmpty(this string? str)
     {
         return string.IsNullOrEmpty(str);
     }
 
-    public static bool IsNullOrWhiteSpace(this string str)
+    public static bool IsNullOrWhiteSpace(this string? str)
     {
         return string.IsNullOrWhiteSpace(str);
     }
 
-    public static bool IsNotNullOrEmpty(this string str)
+    public static bool IsNotNullOrEmpty(this string? str)
     {
         return !str.IsNullOrEmpty();
     }
 
-    public static bool IsNotNullOrWhiteSpace(this string str)
+    public static bool IsNotNullOrWhiteSpace(this string? str)
     {
         return !str.IsNullOrWhiteSpace();
     }
@@ -67,7 +67,7 @@ public static class MinStringExtensions
 
     public static string Right(this string str, int len)
     {
-        Check.NotNull(str, nameof(str));
+        Check.NotNull(str);
 
         if (str.Length < len)
         {
@@ -143,7 +143,7 @@ public static class MinStringExtensions
 
     public static string ReplaceFirst(this string str, string search, string replace, StringComparison comparisonType = StringComparison.Ordinal)
     {
-        Check.NotNull(str, nameof(str));
+        Check.NotNull(str);
 
         var pos = str.IndexOf(search, comparisonType);
         if (pos < 0)
@@ -176,7 +176,7 @@ public static class MinStringExtensions
 
     public static int NthIndexOf(this string str, char c, int n)
     {
-        Check.NotNull(str, nameof(str));
+        Check.NotNull(str);
 
         var count = 0;
         for (var i = 0; i < str.Length; i++)
@@ -327,7 +327,7 @@ public static class MinStringExtensions
     public static T ToEnum<T>(this string value)
         where T : struct
     {
-        Check.NotNull(value, nameof(value));
+        Check.NotNull(value);
 
         return (T)Enum.Parse(typeof(T), value);
     }
@@ -335,7 +335,7 @@ public static class MinStringExtensions
     public static T ToEnum<T>(this string value, bool ignoreCase)
         where T : struct
     {
-        Check.NotNull(value, nameof(value));
+        Check.NotNull(value);
 
         return (T)Enum.Parse(typeof(T), value, ignoreCase);
     }
@@ -357,7 +357,7 @@ public static class MinStringExtensions
         }
     }
 
-    public static string Truncate(this string str, int maxLength)
+    public static string? Truncate(this string str, int maxLength)
     {
         if (str == null)
         {
@@ -372,7 +372,7 @@ public static class MinStringExtensions
         return str.Left(maxLength);
     }
 
-    public static string TruncateFromBeginning(this string str, int maxLength)
+    public static string? TruncateFromBeginning(this string str, int maxLength)
     {
         if (str == null)
         {
@@ -392,7 +392,7 @@ public static class MinStringExtensions
         return TruncateWithPostfix(str, maxLength, "...");
     }
 
-    public static string TruncateWithPostfix(this string str, int maxLength, string postfix)
+    public static string? TruncateWithPostfix(this string str, int maxLength, string postfix)
     {
         if (str == null)
         {

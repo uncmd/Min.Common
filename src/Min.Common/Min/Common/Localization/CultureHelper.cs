@@ -7,7 +7,7 @@ public static class CultureHelper
 {
     public static IDisposable Use([NotNull] string culture, string? uiCulture = null)
     {
-        Check.NotNull(culture, nameof(culture));
+        Check.NotNull(culture);
 
         return Use(
             new CultureInfo(culture),
@@ -19,7 +19,7 @@ public static class CultureHelper
 
     public static IDisposable Use([NotNull] CultureInfo culture, CultureInfo? uiCulture = null)
     {
-        Check.NotNull(culture, nameof(culture));
+        Check.NotNull(culture);
 
         var currentCulture = CultureInfo.CurrentCulture;
         var currentUiCulture = CultureInfo.CurrentUICulture;

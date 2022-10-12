@@ -57,7 +57,7 @@ public static class Check
         ICollection<T> value,
         [CallerArgumentExpression("value")] string? parameterName = default)
     {
-        if (value.IsNullOrEmpty())
+        if (value == null || value.Count <= 0)
         {
             throw new ArgumentException(parameterName + " can not be null or empty!", parameterName);
         }
@@ -79,15 +79,15 @@ public static class Check
         return type;
     }
 
-    public static string Length(
-        [MaybeNull] string value,
+    public static string? Length(
+        [MaybeNull] string? value,
         int maxLength,
         int minLength = 0,
         [CallerArgumentExpression("value")] string? parameterName = default)
     {
         if (minLength > 0)
         {
-            if (value.IsNullOrEmpty())
+            if (string.IsNullOrEmpty(value))
             {
                 throw new ArgumentException(parameterName + " can not be null or empty!", parameterName);
             }

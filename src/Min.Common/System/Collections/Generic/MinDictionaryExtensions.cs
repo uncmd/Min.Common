@@ -5,6 +5,7 @@ namespace System.Collections.Generic;
 public static class MinDictionaryExtensions
 {
     public static TValue? GetOrDefault<TKey, TValue>(this Dictionary<TKey, TValue> dictionary, TKey key)
+        where TKey : notnull
     {
         return dictionary.TryGetValue(key, out var obj) ? obj : default;
     }
@@ -20,6 +21,7 @@ public static class MinDictionaryExtensions
     }
 
     public static TValue? GetOrDefault<TKey, TValue>(this ConcurrentDictionary<TKey, TValue> dictionary, TKey key)
+        where TKey : notnull
     {
         return dictionary.TryGetValue(key, out var obj) ? obj : default;
     }
@@ -40,6 +42,7 @@ public static class MinDictionaryExtensions
     }
 
     public static TValue GetOrAdd<TKey, TValue>(this ConcurrentDictionary<TKey, TValue> dictionary, TKey key, Func<TValue> factory)
+        where TKey : notnull
     {
         return dictionary.GetOrAdd(key, k => factory());
     }
