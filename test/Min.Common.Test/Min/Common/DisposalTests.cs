@@ -6,7 +6,7 @@ public class DisposalTest
     public void DisposableActionTest()
     {
         var a = 0;
-        var disposal = new DisposableAction(() => a++);
+        var disposal = new DisposeAction(() => a++);
         disposal.Dispose();
         
         a.ShouldBe(1);
@@ -16,7 +16,7 @@ public class DisposalTest
     public void DisposableActionParallelTest()
     {
         var a = 0;
-        var disposal = new DisposableAction(() => a++);
+        var disposal = new DisposeAction(() => a++);
         Parallel.For(1, 10, _ =>
         {
             disposal.Dispose();

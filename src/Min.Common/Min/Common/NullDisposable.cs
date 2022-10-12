@@ -1,6 +1,8 @@
-﻿namespace Min.Common;
+﻿using System.Diagnostics.CodeAnalysis;
 
-public sealed class NullDisposable : IDisposable, IAsyncDisposable
+namespace Min.Common;
+
+public sealed class NullDisposable : IDisposable
 {
     public static NullDisposable Instance { get; } = new NullDisposable();
 
@@ -13,20 +15,30 @@ public sealed class NullDisposable : IDisposable, IAsyncDisposable
     {
 
     }
+}
+
+public sealed class NullAsyncDisposable : IAsyncDisposable
+{
+    public static NullAsyncDisposable Instance { get; } = new NullAsyncDisposable();
+
+    private NullAsyncDisposable()
+    {
+
+    }
 
     public ValueTask DisposeAsync()
     {
-        return ValueTask.CompletedTask;
+        return default;
     }
 }
 
-public sealed class DisposableAction : IDisposable
+public sealed class DisposeAction : IDisposable
 {
-    public static readonly DisposableAction Empty = new(null);
+    public static readonly DisposeAction Empty = new(null);
 
     private Action? _disposeAction;
 
-    public DisposableAction(Action? disposeAction)
+    public DisposeAction(Action? disposeAction)
     {
         _disposeAction = disposeAction;
     }
@@ -34,5 +46,22 @@ public sealed class DisposableAction : IDisposable
     public void Dispose()
     {
         Interlocked.Exchange(ref _disposeAction, null)?.Invoke();
+    }
+}
+
+public class AsyncDisposeFunc : IAsyncDisposable
+{
+    private readonly Func<Task> _func;
+
+    public AsyncDisposeFunc([NotNull] Func<Task> func)
+    {
+        Check.NotNull(func);
+
+        _func = func;
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        await _func();
     }
 }
