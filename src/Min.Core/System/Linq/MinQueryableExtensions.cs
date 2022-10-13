@@ -58,14 +58,4 @@ public static class MinQueryableExtensions
             ? (TQueryable)query.Where(predicate)
             : query;
     }
-
-    public static TQueryable OrderByIf<T, TQueryable>([NotNull] this TQueryable query, bool condition, string sorting)
-        where TQueryable : IQueryable<T>
-    {
-        Check.NotNull(query);
-
-        return condition
-            ? (TQueryable)Dynamic.Core.DynamicQueryableExtensions.OrderBy(query, sorting)
-            : query;
-    }
 }
